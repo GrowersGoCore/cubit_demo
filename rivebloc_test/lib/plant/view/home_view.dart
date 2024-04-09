@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rivebloc_test/plant/view/multianimation_page.dart';
 import 'package:rivebloc_test/plant/view/plant_page.dart';
 
 class HomeView extends StatelessWidget {
@@ -24,6 +25,17 @@ class HomeView extends StatelessWidget {
                 );
               },
               child: const Text("Plant"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MultianimationPage(),
+                  )
+                );
+              },
+              child: const Text('Multiple Animations')
             ),
           ],
         )
