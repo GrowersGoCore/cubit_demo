@@ -7,14 +7,17 @@ class MultianimationCubit extends Cubit<double> {
 
   List<String> backgroundArtboards = [];
   double _sliderMax = 100;
-  
+
 
   void loadArtboardNames() async {
-    final RiveFile riveFile =
-      RiveFile.import(await rootBundle.load('assets/multy.riv'));
-    backgroundArtboards =
-      riveFile.artboards.map((artboard) => artboard.name).toList();
-    backgroundArtboards.sort((a, b) => a.toString().compareTo(b.toString()));
+    final RiveFile riveFile = RiveFile.import(await rootBundle.load('assets/multy.riv'));
+  
+    backgroundArtboards = riveFile.artboards
+        .map((artboard) => artboard.name)
+        .where((name) => name.startsWith('tomato_'))
+        .toList();
+    backgroundArtboards.sort();
+    
     _sliderMax = backgroundArtboards.length.toDouble() - 1;
     emit(0);
     updateSliderValue(0);
