@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rive/rive.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,15 +9,19 @@ class MockRiveFile extends Mock implements RiveFile {
   static import(Function<T>({String? named, Matcher? that}) any) {}
 }
 
+//Mock Class for RiveService
+class MockRiveService extends Mock implements RiveService {}
+
 void main() {
   group('MultianimationCubit', () {
     late MultianimationCubit cubit;
-    late MockRiveFile mockRiveFile;
+    late RiveFile mockRiveFile;
+    late RiveService mockRiveService;
 
     setUp(() {
-      cubit = MultianimationCubit(); // pass mocked service to the bloc
+      cubit = MultianimationCubit();
       mockRiveFile = MockRiveFile();
-      mockRiveService = MockRiveService();
+      mockRiveService = MockRiveService(); // pass mocked service to the bloc
     });
 
     tearDown(() {
@@ -26,12 +29,6 @@ void main() {
     });
 
     test('loadArtboardNames sets backgroundArtboards correctly', () async {
-      
-      //Configure mock for rootBundle.load
-      when(() => rootBundle.load(any as String)).thenAnswer((_) async => ByteData(0));
-
-      //Configure mock for RiveFile.import
-      when(() => MockRiveFile.import(any)).thenAnswer((_) async => mockRiveFile);
 
       //Simulate artboards
       final artboards = [
@@ -40,12 +37,10 @@ void main() {
         MockArtboard('not_tomato_3'),
       ];
 
+      // Add when block with the mocked service
       when(() => mockRiveService.getFile()).thenAnswer((_) async => mockRiveFile);
 
-      // Add when block with the mocked service
-
-      when(() => mockRiveFile.artboards)
-          .thenReturn(artboards); //Simulate RiveFile
+      when(() => mockRiveFile.artboards).thenReturn(artboards); //Simulate RiveFile
 
       await cubit.loadArtboardNames(); //Method call
 
