@@ -6,16 +6,14 @@ import 'package:rivebloc_test/multianimation/cubit/multianimation_cubit.dart';
 import 'package:rivebloc_test/multianimation/service/rive_service.dart';
 
 //Mock Class for RiveFile
-class MockRiveFile extends Mock implements RiveFile {}
-
-//Mock Class for RiveService
-class MockRiveService extends Mock implements RiveService {}
+class MockRiveFile extends Mock implements RiveFile {
+  static import(Function<T>({String? named, Matcher? that}) any) {}
+}
 
 void main() {
   group('MultianimationCubit', () {
     late MultianimationCubit cubit;
-    late RiveFile mockRiveFile;
-    late RiveService mockRiveService;
+    late MockRiveFile mockRiveFile;
 
     setUp(() {
       cubit = MultianimationCubit(); // pass mocked service to the bloc
@@ -28,6 +26,12 @@ void main() {
     });
 
     test('loadArtboardNames sets backgroundArtboards correctly', () async {
+      
+      //Configure mock for rootBundle.load
+      when(() => rootBundle.load(any as String)).thenAnswer((_) async => ByteData(0));
+
+      //Configure mock for RiveFile.import
+      when(() => MockRiveFile.import(any)).thenAnswer((_) async => mockRiveFile);
 
       //Simulate artboards
       final artboards = [
@@ -38,7 +42,10 @@ void main() {
 
       when(() => mockRiveService.getFile()).thenAnswer((_) async => mockRiveFile);
 
-      when(() => mockRiveFile.artboards).thenReturn(artboards); //Simulate RiveFile
+      // Add when block with the mocked service
+
+      when(() => mockRiveFile.artboards)
+          .thenReturn(artboards); //Simulate RiveFile
 
       await cubit.loadArtboardNames(); //Method call
 
