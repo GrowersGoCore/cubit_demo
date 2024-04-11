@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rivebloc_test/plant/view/home_view.dart';
+import 'package:rivebloc_test/home/view/home_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

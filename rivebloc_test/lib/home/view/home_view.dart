@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rivebloc_test/plant/view/multianimation_page.dart';
+import 'package:rivebloc_test/multianimation/view/multianimation_page.dart';
 import 'package:rivebloc_test/plant/view/plant_page.dart';
 
 class HomeView extends StatelessWidget {

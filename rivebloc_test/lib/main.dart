@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rivebloc_test/plant/view/home_page.dart';
+import 'package:rivebloc_test/home/view/home_page.dart';
 
 void main() {
   runApp(const RiveblocTest());

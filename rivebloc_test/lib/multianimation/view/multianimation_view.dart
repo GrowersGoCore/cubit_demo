@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
-import 'package:rivebloc_test/plant/cubit/multianimation_cubit.dart';
+import 'package:rivebloc_test/multianimation/cubit/multianimation_cubit.dart';
 
 class MultianimationView extends StatefulWidget {
   const MultianimationView({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _MultianimationViewState extends State<MultianimationView> {
                 Expanded(
                   child: cubit.backgroundArtboards.isNotEmpty
                       ? RiveAnimation.asset(
-                          'assets/multy.riv',
+                          'assets/multy2.riv',
                           artboard: cubit
                               .backgroundArtboards[sliderValue.toInt()],
                           fit: BoxFit.contain,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rivebloc_test/plant/cubit/multianimation_cubit.dart';
-import 'package:rivebloc_test/plant/view/multianimation_view.dart';
+import 'package:rivebloc_test/multianimation/cubit/multianimation_cubit.dart';
+import 'package:rivebloc_test/multianimation/view/multianimation_view.dart';
 
 class MultianimationPage extends StatelessWidget {
   const MultianimationPage({super.key});
