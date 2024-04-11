@@ -19,9 +19,9 @@ void main() {
     late RiveService mockRiveService;
 
     setUp(() {
-      cubit = MultianimationCubit();
       mockRiveFile = MockRiveFile();
       mockRiveService = MockRiveService(); // pass mocked service to the bloc
+      cubit = MultianimationCubit(mockRiveService); // pass mocked service to the cubit
     });
 
     tearDown(() {
@@ -44,7 +44,7 @@ void main() {
 
       await cubit.loadArtboardNames(); //Method call
 
-      expect(cubit.backgroundArtboards, [
+      expect(cubit.state.backgroundArtboards, [
         'tomato_1',
         'tomato_2'
       ]); //Verify that backgroundArtboards has been correctly configured
@@ -55,7 +55,7 @@ void main() {
 
       cubit.updateSliderValue(value); //Method call
 
-      expect(cubit.state, value); //Verify that the emitted value is correct
+      expect(cubit.state.sliderMax, value); //Verify that the emitted value is correct
     });
   });
 }
