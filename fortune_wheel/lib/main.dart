@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => FortuneWheelCubit(),
+      create: (_) => FortuneWheelCubit()..init(),
       child: MaterialApp(
         title: 'Fortune Wheel',
         theme: ThemeData(

@@ -1,56 +1,89 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:fortune_wheel/fortune_wheel/bloc/wheel_state.dart';
-import 'package:fortune_wheel/fortune_wheel/view/wheel_view.dart';
 import 'package:fortune_wheel/prize/prize.dart';
+import 'package:rxdart/subjects.dart';
 
 class FortuneWheelCubit extends Cubit<FortuneWheelState> {
   FortuneWheelCubit() : super(const FortuneWheelState());
 
-  StreamController<int> controller = StreamController<int>();
-  int spins = 0;
-  bool canSpin = true;
-  List<Prize> prizes = [];
+  final selected = BehaviorSubject<int>();
+  bool isWheelSpinning = false;
 
-  int generateSpins() {
+  void init() {
+    generateSpins();
+    generatePrizes();
+  }
+
+  void generateSpins() {
     int spins = Random().nextInt(5) + 1;
-    return spins;
+    emit(state.copyWith(spins: spins));
   }
 
-  void updateSpins() {
-    spins--;
-    if (spins <= 0) {
-      canSpin = false;
-    }
-    emit(state.copyWith(spins: spins, canSpin: canSpin));
-  }
-
-  List<Prize> generatePrizes() {
-    List<Prize> prizes = [
-      Prize(
-          icon: Image.asset('assets/icon1.png').toString(),
-          name: 'Prize 1',
-          category: Category.category1),
-      Prize(
-          icon: Image.asset('assets/icon1.png').toString(),
-          name: 'Prize 2',
-          category: Category.category2),
-      Prize(
-          icon: Image.asset('assets/icon1.png').toString(),
-          name: 'Prize 3',
-          category: Category.category3),
-    ];
-    return prizes;
+  void generatePrizes() {
+    emit(state.copyWith(
+      prizes: [
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 1',
+            category: Category.category1),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 2',
+            category: Category.category1),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 1',
+            category: Category.category2),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 2',
+            category: Category.category2),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 1',
+            category: Category.category3),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 2',
+            category: Category.category3),
+      ],
+    ));
   }
 
   void spinTheWheel() {
-    if (spins > 0) {
-      controller.add(Random().nextInt(prizes.length));
+    if (state.spins > 0) {
+      selected.add(Random().nextInt(state.prizes.length));
+      updateSpins();
+      isWheelSpinning = true;
+    }
+    emit(state.copyWith(
+        selected: selected,
+        spins: state.spins,
+        isWheelSpinning: isWheelSpinning));
+  }
+
+  void spinTheWheelTricked() {
+    if (state.spins > 0) {
+      const itemIndex = 2; // Index of the item that you always want to win
+
+      selected.add(itemIndex);
       updateSpins();
     }
-    emit(state.copyWith(controller: controller, spins: spins));
+    emit(state.copyWith(
+        selected: selected,
+        spins: state.spins,
+        isWheelSpinning: isWheelSpinning));
+  }
+
+  void stopTheWheel() {
+    isWheelSpinning = false;
+    emit(state.copyWith(isWheelSpinning: isWheelSpinning));
+  }
+
+  void updateSpins() {
+    final newSpins = state.spins - 1;
+    emit(state.copyWith(spins: newSpins, canSpin: newSpins > 0));
   }
 }
