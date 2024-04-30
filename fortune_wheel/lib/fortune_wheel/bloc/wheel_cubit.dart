@@ -27,28 +27,34 @@ class FortuneWheelCubit extends Cubit<FortuneWheelState> {
         Prize(
             icon: 'assets/icon1.png',
             name: 'Prize 1',
-            category: Category.category1),
+            category: Category.category1,
+            categoryColor: CategoryColor.category1),
         Prize(
             icon: 'assets/icon1.png',
             name: 'Prize 2',
-            category: Category.category1),
+            category: Category.category1,
+            categoryColor: CategoryColor.category1),
         Prize(
             icon: 'assets/icon1.png',
             name: 'Prize 1',
-            category: Category.category2),
+            category: Category.category2,
+            categoryColor: CategoryColor.category2),
         Prize(
             icon: 'assets/icon1.png',
             name: 'Prize 2',
-            category: Category.category2),
+            category: Category.category2,
+            categoryColor: CategoryColor.category2),
         Prize(
             icon: 'assets/icon1.png',
             name: 'Prize 1',
-            category: Category.category3),
+            category: Category.category3,
+            categoryColor: CategoryColor.category3),
         Prize(
             icon: 'assets/icon1.png',
             name: 'Prize 2',
-            category: Category.category3),
-      ],
+            category: Category.category3,
+            categoryColor: CategoryColor.category3),
+      ]..shuffle(),
     ));
   }
 

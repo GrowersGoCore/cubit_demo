@@ -20,12 +20,61 @@ class FortuneWheelView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        state.canSpin && !state.isWheelSpinning
+                            ? cubit.spinTheWheel()
+                            : null;
+                      },
+                      child: state.canSpin
+                          ? Text('Lucky spin (${state.spins})')
+                          : const Text('No spins remaining'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        state.canSpin && !state.isWheelSpinning
+                            ? cubit.spinTheWheelTricked()
+                            : null;
+                      },
+                      child: state.canSpin
+                          ? Text('Tricked spin (${state.spins})')
+                          : const Text('No spins remaining'),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
                 SizedBox(
                   height: 350,
                   child: FortuneWheel(
                     animateFirst: false,
                     duration: const Duration(seconds: 3),
+                    physics: NoPanPhysics(),
                     selected: cubit.selected.stream,
+                    indicators: <FortuneIndicator>[
+                      FortuneIndicator(
+                        alignment: Alignment.topCenter,
+                        child: TriangleIndicator(
+                          color: Colors.white,
+                          width: 25,
+                          height: 25,
+                          elevation: 8,
+                        ),
+                      ),
+                      FortuneIndicator(
+                        alignment: Alignment.center,
+                        child: TriangleIndicator(
+                          color: Colors.white,
+                          width: 25,
+                          height: 25,
+                          elevation: 8,
+                        ),
+                      ),
+                    ],
                     items: [
                       for (final prize in state.prizes) ...<FortuneItem>{
                         FortuneItem(
@@ -44,40 +93,21 @@ class FortuneWheelView extends StatelessWidget {
                               Text(prize.getCategory()),
                             ],
                           ),
+                          style: FortuneItemStyle(
+                            color: prize.getCategoryColor(),
+                            borderColor: prize.getCategoryColor(),
+                            borderWidth: 1,
+                          ),
                         )
                       }
                     ],
                     onAnimationStart: () {},
                     onAnimationEnd: () {
                       final reward = state.prizes[cubit.selected.value];
-                      print(reward);
-                      state.prizes.remove(reward);
+                      print('${reward.name} ${reward.getCategory()}');
                       cubit.stopTheWheel();
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    state.canSpin && !state.isWheelSpinning
-                        ? cubit.spinTheWheel()
-                        : null;
-                  },
-                  child: state.canSpin
-                      ? Text('Spin the wheel (${state.spins})')
-                      : const Text('No spins remaining'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    state.canSpin && !state.isWheelSpinning
-                        ? cubit.spinTheWheelTricked()
-                        : null;
-                  },
-                  child: state.canSpin
-                      ? Text('Hehehe (${state.spins})')
-                      : const Text('No spins remaining'),
                 ),
               ],
             ),
