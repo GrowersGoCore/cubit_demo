@@ -21,6 +21,13 @@ class FortuneWheelCubit extends Cubit<FortuneWheelState> {
     emit(state.copyWith(spins: spins));
   }
 
+  void addMoreSpins() {
+    int currentSpins = state.spins;
+    int additionalSpins = 3;
+    int newSpins = currentSpins + additionalSpins;
+    emit(state.copyWith(spins: newSpins));
+  }
+
   void generatePrizes() {
     emit(state.copyWith(
       prizes: [

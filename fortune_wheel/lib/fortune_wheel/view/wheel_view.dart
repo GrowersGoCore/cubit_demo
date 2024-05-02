@@ -45,68 +45,76 @@ class FortuneWheelView extends StatelessWidget {
                     ),
                   ],
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    cubit.addMoreSpins();
+                  },
+                  child: const Text('Add more spins'),
+                ),
                 const SizedBox(
                   height: 25,
                 ),
-                SizedBox(
-                  height: 350,
-                  child: FortuneWheel(
-                    animateFirst: false,
-                    duration: const Duration(seconds: 3),
-                    physics: NoPanPhysics(),
-                    selected: cubit.selected.stream,
-                    indicators: <FortuneIndicator>[
-                      FortuneIndicator(
-                        alignment: Alignment.topCenter,
-                        child: TriangleIndicator(
-                          color: Colors.white,
-                          width: 25,
-                          height: 25,
-                          elevation: 8,
-                        ),
-                      ),
-                      FortuneIndicator(
-                        alignment: Alignment.center,
-                        child: TriangleIndicator(
-                          color: Colors.white,
-                          width: 25,
-                          height: 25,
-                          elevation: 8,
-                        ),
-                      ),
-                    ],
-                    items: [
-                      for (final prize in state.prizes) ...<FortuneItem>{
-                        FortuneItem(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                prize.icon,
-                                height: 50,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(prize.name),
-                              Text(prize.getCategory()),
-                            ],
+                Transform.translate(
+                  offset:
+                      const Offset(0, 325), // Y coordinate offset of the wheel
+                  child: Transform.scale(
+                    scale: 1.65, // X and Y scale of the wheel
+                    child: SizedBox(
+                      height: 350,
+                      child: FortuneWheel(
+                        animateFirst: false,
+                        duration: const Duration(seconds: 3),
+                        physics: NoPanPhysics(),
+                        selected: cubit.selected.stream,
+                        indicators: const <FortuneIndicator>[
+                          FortuneIndicator(
+                            alignment: Alignment.topCenter,
+                            child: TriangleIndicator(
+                              color: Colors.white70,
+                              width: 25,
+                              height: 25,
+                              elevation: 8,
+                            ),
                           ),
-                          style: FortuneItemStyle(
-                            color: prize.getCategoryColor(),
-                            borderColor: prize.getCategoryColor(),
-                            borderWidth: 1,
-                          ),
-                        )
-                      }
-                    ],
-                    onAnimationStart: () {},
-                    onAnimationEnd: () {
-                      final reward = state.prizes[cubit.selected.value];
-                      print('${reward.name} ${reward.getCategory()}');
-                      cubit.stopTheWheel();
-                    },
+                        ],
+                        items: [
+                          for (final prize in state.prizes) ...<FortuneItem>{
+                            FortuneItem(
+                              child: Transform.rotate(
+                                angle:
+                                    -4.715, // angle of rotation of the entire item
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      prize.icon,
+                                      height: 50,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(prize.name),
+                                    Text(prize.getCategory()),
+                                  ],
+                                ),
+                              ),
+                              style: FortuneItemStyle(
+                                color: prize.getCategoryColor(),
+                                borderColor: prize.getCategoryColor(),
+                                borderWidth: 1,
+                              ),
+                            )
+                          }
+                        ],
+                        onAnimationStart: () {},
+                        onAnimationEnd: () {
+                          final reward = state.prizes[cubit.selected.value];
+                          print('${reward.name} ${reward.getCategory()}');
+                          cubit.stopTheWheel();
+                        },
+                      ),
+                    ),
                   ),
                 ),
               ],
