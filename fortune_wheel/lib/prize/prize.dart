@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-enum Category { category1, category2, category3 }
+enum Category { category1, category2, category3, category4 }
 
-enum CategoryColor { category1, category2, category3 }
+enum CategoryColor { category1, category2, category3, category4 }
 
 class Prize {
   Prize({
@@ -25,6 +25,8 @@ class Prize {
         return 'Category 2';
       case Category.category3:
         return 'Category 3';
+      case Category.category4:
+        return 'Category 4';
     }
   }
 
@@ -36,6 +38,8 @@ class Prize {
         return const Color(0xFF5DA8FF);
       case CategoryColor.category3:
         return const Color(0xFFAD63F6);
+      case CategoryColor.category4:
+        return const Color(0xFF0AEFEF);
     }
   }
 }

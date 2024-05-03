@@ -53,6 +53,11 @@ class FortuneWheelCubit extends Cubit<FortuneWheelState> {
             categoryColor: CategoryColor.category2),
         Prize(
             icon: 'assets/icon1.png',
+            name: 'Prize 3',
+            category: Category.category2,
+            categoryColor: CategoryColor.category2),
+        Prize(
+            icon: 'assets/icon1.png',
             name: 'Prize 1',
             category: Category.category3,
             categoryColor: CategoryColor.category3),
@@ -61,6 +66,21 @@ class FortuneWheelCubit extends Cubit<FortuneWheelState> {
             name: 'Prize 2',
             category: Category.category3,
             categoryColor: CategoryColor.category3),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 1',
+            category: Category.category4,
+            categoryColor: CategoryColor.category4),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 2',
+            category: Category.category4,
+            categoryColor: CategoryColor.category4),
+        Prize(
+            icon: 'assets/icon1.png',
+            name: 'Prize 3',
+            category: Category.category4,
+            categoryColor: CategoryColor.category4),
       ]..shuffle(),
     ));
   }
